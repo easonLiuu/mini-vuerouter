@@ -11,6 +11,8 @@ function install(_Vue) {
         //根实例传递了router
         this._routerRoot = this; //根实例
         this._router = this.$options.router;
+        //初始化操作
+        this._router.init(this) //this就是整个应用 newVue
       } else {
         // 所有组件上增加一个_routerRoot指向根实例
         this._routerRoot = this.$parent && this.$parent._routerRoot;
@@ -18,7 +20,6 @@ function install(_Vue) {
       //在组件中都可通过this._routerRoot._router
     },
   });
-  console.log("install");
   //不能直接将属性定义在原型上 只有通过newVue中传入了router才能被共享
   //实例上取值 拿到_router属性 代理
   Object.defineProperty(Vue.prototype, "$router", {
@@ -28,8 +29,19 @@ function install(_Vue) {
   });
 
   Vue.component('router-link',{
+    props: {
+        to: {type: String, require: true},
+        tag: {type: String, default: 'a'}
+    },
+    methods: {
+        handler(){
+            this.$router.push(this.to)
+            console.log(111111)
+        }
+    },
     render(){
-        return <a>{this.$slots.default}</a>
+        let tag = this.tag
+        return <tag onClick={this.handler}>{this.$slots.default}</tag>
     }
   })
   Vue.component('router-view',{

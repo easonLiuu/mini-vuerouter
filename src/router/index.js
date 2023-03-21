@@ -9,7 +9,21 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    children: [
+      {
+        path: 'a',
+        component: {
+          render: (h)=><h1>a</h1>
+        }
+      },
+      {
+        path: 'b',
+        component: {
+          render: (h)=><h1>b</h1>
+        }
+      }
+    ]
   },
   {
     path: '/about',
@@ -22,6 +36,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'hash',
   routes
 })
 // 哈希模式
@@ -30,5 +45,20 @@ const router = new VueRouter({
 
 // history模式 H5提供的 可以改变路径 同时强制刷新时会带上路径 服务端解析路径 因此可用于服务端渲染和seo优化 需要服务端支持
 // 后续页面基于historyapi即可
+router.matcher.addRoutes([
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    children: [
+      {
+        path: 'c',
+        component: {
+          render: (h)=><h1>c</h1>
+        }
+      }
+    ]
+  }
+])
 
 export default router
