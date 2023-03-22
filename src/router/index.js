@@ -61,6 +61,21 @@ router.matcher.addRoutes([
   }
 ])
 
+router.beforeEach((from, to, next) => {
+  setTimeout(() => {
+    console.log(1)
+    next()
+  }, 1000);
+})
+
+router.beforeEach((from, to, next) => {
+  setTimeout(() => {
+    console.log(2)
+    next()
+  }, 1000);
+})
+
+
 //导航守卫 一个路由切换到另一个理由时会发生什么
 //组件要先离开 beforeRouteLeave
 //切换到新的组件里 beforeEach 进入到某个页面
@@ -71,5 +86,6 @@ router.matcher.addRoutes([
 //确认切换完毕
 //beforeResolve
 //都走完了 afterEach
+//内部会把钩子维护成一个数组
 
 export default router

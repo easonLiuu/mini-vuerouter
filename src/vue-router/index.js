@@ -7,6 +7,7 @@ class VueRouter {
   constructor(options) {
     //用户传递的路由配置 可以对这个配置进行路由映射
     let routes = options.routes || [];
+    this.beforeEachHooks = []
     // console.log(routes)
     //变成映射表方便后续的匹配操作 可以匹配也可以添加新的路由
     this.matcher = createMatcher(routes);
@@ -27,9 +28,11 @@ class VueRouter {
     //这里只是调用了跳转逻辑 跳转逻辑不会修改路径
     //针对hash 可以window.location.hash = location
     //不是hash history.pushState
-    this.history.transitionTo(location, () => {
-        window.location.hash = location
-    })
+
+    return this.history.push(location)
+  }
+  beforeEach(cb){
+    this.beforeEachHooks.push(cb)
   }
   init(app){
     let history = this.history
