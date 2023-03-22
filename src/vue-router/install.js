@@ -1,3 +1,6 @@
+import routerLink from "./components/router-link";
+import routerView from "./components/router-view";
+
 export let Vue;
 function install(_Vue) {
   Vue = _Vue; //将传入的vue构造函数变为全局的
@@ -13,6 +16,11 @@ function install(_Vue) {
         this._router = this.$options.router;
         //初始化操作
         this._router.init(this) //this就是整个应用 newVue
+        //Vue.util.defineReactive(this)
+        //给根实例添加属性就是当前的current对象 变成响应式的
+        //两次改的不是一个current
+        Vue.util.defineReactive(this, '_route', this._router.history.current)
+        //暴露的根实例 通过this._router拿到根实例 通过this._route拿到current对象
       } else {
         // 所有组件上增加一个_routerRoot指向根实例
         this._routerRoot = this.$parent && this.$parent._routerRoot;
@@ -27,27 +35,13 @@ function install(_Vue) {
       return this._routerRoot && this._routerRoot._router;
     },
   });
+  Object.defineProperty(Vue.prototype, "$route", { //所有组件里面都有一个$route属性 对应的就是我们里面写的current
+    get() {
+      return this._routerRoot && this._routerRoot._route;
+    },
+  });
 
-  Vue.component('router-link',{
-    props: {
-        to: {type: String, require: true},
-        tag: {type: String, default: 'a'}
-    },
-    methods: {
-        handler(){
-            this.$router.push(this.to)
-            console.log(111111)
-        }
-    },
-    render(){
-        let tag = this.tag
-        return <tag onClick={this.handler}>{this.$slots.default}</tag>
-    }
-  })
-  Vue.component('router-view',{
-    render(){
-        return <div>11</div>
-    }
-  })
+  Vue.component('router-link', routerLink)
+  Vue.component('router-view', routerView)
 }
 export default install;

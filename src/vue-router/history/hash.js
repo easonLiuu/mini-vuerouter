@@ -16,8 +16,9 @@ class HashHistory extends Base {
         ensureSlash()
     }
     setupListener(){ //稍后调用该方法监控hash的变化
-        window.addEventListener('hashchange', function(){
-            getHash()
+        window.addEventListener('hashchange', ()=>{
+            //哈希值变化后也需要重新跳转
+            this.transitionTo(getHash()) //监听hash值变化 通过hash='/' 也会触发此方法
         })
     }
     getCurrentLocation(){

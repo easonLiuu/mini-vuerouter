@@ -12,7 +12,7 @@
 export default {
   name: 'App',
   mounted(){
-    console.log(this._routerRoot._router)
+    // console.log(this._routerRoot._router)
   }
 }
 

@@ -61,4 +61,15 @@ router.matcher.addRoutes([
   }
 ])
 
+//导航守卫 一个路由切换到另一个理由时会发生什么
+//组件要先离开 beforeRouteLeave
+//切换到新的组件里 beforeEach 进入到某个页面
+
+//组件更新呢 beforeRouteUpdate
+//不是更新 走路由中配置的钩子 beforeEnter
+//走组件的钩子  beforeRouteEnter
+//确认切换完毕
+//beforeResolve
+//都走完了 afterEach
+
 export default router

@@ -6,7 +6,7 @@ class BrowserHistory extends Base {
     }
     setupListener(){ //稍后调用该方法监控hash的变化
         window.addEventListener('popstate', function(){
-            console.log(window.location.pathname)
+            // console.log(window.location.pathname)
         })
     }
     getCurrentLocation(){

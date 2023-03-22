@@ -5,7 +5,7 @@ export default function createRouteMap(routes, pathMap){ //根据用户选项 �
     routes.forEach(route => {
         addRouteRecord(route, pathMap) //添加路由记录
     })
-    console.log(pathMap)
+    // console.log(pathMap)
     return {
         pathMap
     }
@@ -17,7 +17,8 @@ function addRouteRecord(route, pathMap, parentRecord){
         path,
         component: route.component,
         props: route.props,
-        meta: route.meta
+        meta: route.meta,
+        parent: parentRecord
     }
     if(!pathMap[path]){
         //维护路径对应的属性
